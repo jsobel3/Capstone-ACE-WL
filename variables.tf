@@ -28,7 +28,7 @@ variable "sql_admin_login" {
 
 variable "sql_admin_password" {
   type        = string
-  description = "SQL Server password name in Azure"
+  description = "SQL Server password in Azure"
 }
 
 variable "resourcegroup_name" {

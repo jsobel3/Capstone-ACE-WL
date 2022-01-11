@@ -17,8 +17,8 @@ provider "azurerm" {
 #Create App Service Plan
 resource "azurerm_app_service_plan" "NBOS_AZ_ASP" {
   name                = "${var.az_prefix}-appserviceplan"
-  location            = var.resourcegroup_location
-  resource_group_name = var.resourcegroup_name
+  location            = data.azurerm_resource_group.NBOS_AZ_RG.location
+  resource_group_name = data.azurerm_resource_group.NBOS_AZ_RG.name
 
   sku {
     tier = "Standard"
@@ -64,8 +64,8 @@ resource "azurerm_sql_server" "NBOS_AZ_sqlserver" {
   resource_group_name          = data.azurerm_resource_group.NBOS_AZ_RG.name
   location                     = data.azurerm_resource_group.NBOS_AZ_RG.location
   version                      = "12.0"
-  administrator_login          = "var.sql_admin_login"
-  administrator_login_password = "var.sql_admin_password"
+  administrator_login          = "mradministrator"
+  administrator_login_password = "thisIsDog11"
 }
 
 resource "azurerm_storage_account" "NBOS_AZ_SA" {
@@ -79,8 +79,8 @@ resource "azurerm_storage_account" "NBOS_AZ_SA" {
 #Create SQL DB
 resource "azurerm_sql_database" "NBOS_AZ_DB" {
   name                = "nbossqldb"
-  resource_group_name      = data.azurerm_resource_group.NBOS_AZ_RG.name
-  location                 = data.azurerm_resource_group.NBOS_AZ_RG.location
+  resource_group_name = data.azurerm_resource_group.NBOS_AZ_RG.name
+  location            = data.azurerm_resource_group.NBOS_AZ_RG.location
   server_name         = azurerm_sql_server.NBOS_AZ_sqlserver.name
 
   extended_auditing_policy {
